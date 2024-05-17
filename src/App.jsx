@@ -18,28 +18,48 @@ function App() {
       isDone: true,
     },
   ]);
+  const toggleComplete = (id) => {
+    const upDateToDo = todos.map((todo) => {
+      if (todo.id === id) {
+        return {...todo, isDone: !todo.isDone}
+      }
+      return todo;
+    })
+    setTodos(upDateToDo);
+  }
+  const removeToDo = todos.filter((todo) => todo.id !== id)
   
+  /**
+   * 1) 먼저 working에 map 그리고 Done에 map에
+   * 컴포먼트를 돌아서 그려주는 부분에 삭제버튼 만들기!
+   * 2) 삭제 버튼은 어떻게 만드냐면
+   * 위에 toggleComplete 조금 변형해서
+   * 삭제할 친구의 id가 필요
+   * 21번째 줄 함수명만 변경해서 활용하기!!!
+   * 
+   * const removeToDo = todos.filter((todo) => todo.id !== id)
+   * 삭제가 되지 않아야 될 것만 남아있는 상태!
+   * 온클릭 넣는 거 까먹지 않기
+   */
   return (
-    <div style={{
-      textAlign: "center",
-      margin: "0 auto",
-    }}>
+    <div>
       <div style={{
-        width: "1200px",
-        height: "800px",
+        maxWidth: "1200px",
+        maxHeight: "800px",
         margin: "0 auto",
       }}>
         <header style={{
           display: "flex",
-          justifyContent: "center",
           padding: "10px",
           border: "2px solid #EEEEEE",
         }}>
           <p style={{
             
+
           }}>My Todo List</p>
           <p style={{
-            
+            justifyContent: "right",
+            marginLeft: '5px'
           }}>React</p>
         </header>
         <main style={{
@@ -54,7 +74,7 @@ function App() {
             <form onSubmit={function(event) {
                 event.preventDefault();
                 const newTodo = {
-                  id: 5,
+                  id: Date.now(),
                   title: title,
                   contents: contents,
                   isDone: false,
@@ -68,7 +88,7 @@ function App() {
               <p>내용 <input value={contents} onChange={function(event) {
                 setContents(event.target.value);
               }} /></p>
-              <button type='submit'>추가하기</button>
+              <button>추가하기</button>
             </form>
           </div>
           <div>
@@ -89,9 +109,8 @@ function App() {
                   }}>
                     <h3>{todo.title}</h3>
                     <p>{todo.contents}</p>
-                    <p>완료여부 {todo.isDone.toString()}</p>
-                    <button>완료</button>
-                    <button>취소</button>
+                    <button onClick={() => toggleComplete(todo.id)}>완료</button>
+                    <button onClick={() => toggleDelete(todo.id)}>삭제</button>
                   </div>
                 )
               })}
@@ -113,9 +132,7 @@ function App() {
                   }}>
                     <h3>{todo.title}</h3>
                     <p>{todo.contents}</p>
-                    <p>완료여부 {todo.isDone.toString()}</p>
-                    <button>완료</button>
-                    <button>취소</button>
+                    <button onClick={() => toggleComplete(todo.id)}>완료</button>
                   </div>
                 )
               })}
