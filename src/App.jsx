@@ -26,8 +26,12 @@ function App() {
       return todo;
     })
     setTodos(upDateToDo);
+  };
+
+  const toggleDelet = (id) => {
+    const removerToDo = todos.filter((todo) => todo.id !== id);
+    setTodos(removerToDo);
   }
-  const removeToDo = todos.filter((todo) => todo.id !== id)
   
   /**
    * 1) 먼저 working에 map 그리고 Done에 map에
@@ -110,7 +114,7 @@ function App() {
                     <h3>{todo.title}</h3>
                     <p>{todo.contents}</p>
                     <button onClick={() => toggleComplete(todo.id)}>완료</button>
-                    <button onClick={() => toggleDelete(todo.id)}>삭제</button>
+                    <button onClick={() => toggleDelet(todo.id)}>삭제</button>
                   </div>
                 )
               })}
@@ -133,6 +137,7 @@ function App() {
                     <h3>{todo.title}</h3>
                     <p>{todo.contents}</p>
                     <button onClick={() => toggleComplete(todo.id)}>완료</button>
+                    <button onClick={() => toggleDelet(todo.id)}>삭제</button>
                   </div>
                 )
               })}
